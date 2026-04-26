@@ -1,40 +1,402 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>FRP Analysis Files</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRP Analysis Tool - MediaTek Preloader Reverse Engineering</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
-        h1 { color: #333; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
-        ul { list-style: none; padding: 0; }
-        li { padding: 8px; border-bottom: 1px solid #ddd; }
-        li:hover { background: #f0f0f0; }
-        a { text-decoration: none; color: #0366d6; }
-        a:hover { text-decoration: underline; }
-        .folder { color: #e36209; font-weight: bold; }
-        .file { color: #6f42c1; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0d1117 0%, #0a0c10 100%);
+            border-bottom: 1px solid #30363d;
+            padding: 3rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #238636, #2ea043, #238636);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #fff, #58a6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            color: #8b949e;
+            font-size: 1.1rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #58a6ff;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: #8b949e;
+        }
+        
+        .file-browser {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 2rem;
+        }
+        
+        .file-header {
+            background: #0d1117;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .search-box {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            color: #c9d1d9;
+            width: 250px;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: #58a6ff;
+        }
+        
+        .file-list {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            padding: 0.75rem 1.5rem;
+            border-bottom: 1px solid #21262d;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+        
+        .file-item:hover {
+            background: #1f242e;
+        }
+        
+        .file-icon {
+            font-size: 1.2rem;
+        }
+        
+        .file-name {
+            flex: 1;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+        
+        .file-name:hover {
+            text-decoration: underline;
+        }
+        
+        .file-size {
+            font-size: 0.8rem;
+            color: #8b949e;
+        }
+        
+        .download-btn {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .download-btn:hover {
+            background: #2ea043;
+        }
+        
+        .section {
+            margin-top: 2rem;
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        
+        .section h2 {
+            color: #58a6ff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .code-block {
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid #30363d;
+            margin-top: 2rem;
+            color: #8b949e;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #21262d;
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            margin: 0.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .container { padding: 1rem; }
+            .file-header { flex-direction: column; }
+            .search-box { width: 100%; }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>📁 FRP Analysis Files</h1>
-    <p>Click any file to view or download</p>
-    <ul id="file-list">
-        <!-- سيتم تعبئتها تلقائياً -->
-    </ul>
-</div>
-<script>
-fetch('/اسم_المشروع/file-list.json')
-    .then(res => res.json())
-    .then(files => {
-        const ul = document.getElementById('file-list');
-        files.forEach(file => {
-            const li = document.createElement('li');
-            const icon = file.endsWith('/') ? '📁 ' : '📄 ';
-            li.innerHTML = `<a href="/اسم_المشروع/${file}">${icon}${file}</a>`;
-            ul.appendChild(li);
+    <div class="header">
+        <h1>🔐 FRP Analysis Tool</h1>
+        <p class="subtitle">MediaTek Preloader Reverse Engineering | KMAC128 + AES FRP Generation</p>
+        <div class="stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="file-count">0</div>
+                <div class="stat-label">Total Files</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="repo-size">0</div>
+                <div class="stat-label">Repository Size</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">🔓</div>
+                <div class="stat-label">Public Repository</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="file-browser">
+            <div class="file-header">
+                <strong>📂 Repository Files</strong>
+                <input type="text" class="search-box" placeholder="🔍 Search files..." id="search">
+            </div>
+            <div class="file-list" id="file-list">
+                <div style="padding: 2rem; text-align: center;">Loading files...</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📖 About This Project</h2>
+            <p>This repository contains reverse engineering analysis of MediaTek preloader and LK (Little Kernel) for FRP (Factory Reset Protection) mechanism.</p>
+            <br>
+            <div>
+                <span class="badge">KMAC128</span>
+                <span class="badge">AES-ECB</span>
+                <span class="badge">RSA-4096</span>
+                <span class="badge">EFUSE</span>
+                <span class="badge">OEMINFO</span>
+                <span class="badge">MediaTek MT6768</span>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>⚡ Quick Commands</h2>
+            <div class="code-block">
+                # Clone the repository<br>
+                git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git<br><br>
+                # Run FRP analysis<br>
+                python3 preloader_analyzer.py preloader_k69v1_64_64only.bin<br><br>
+                # Extract crypto keys<br>
+                python3 frp_crypto_extractor.py lk.img
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📊 Analysis Results</h2>
+            <p><strong>✅ Algorithm identified:</strong> KMAC128 + AES-ECB</p>
+            <p><strong>✅ Key length:</strong> 16 bytes (128 bits)</p>
+            <p><strong>✅ MAC length:</strong> 16 bytes</p>
+            <p><strong>✅ RSA key size:</strong> 4096 bits</p>
+            <p><strong>✅ Found in LK:</strong> KMAC128, secret, key, info parameters</p>
+        </div>
+        
+        <div class="footer">
+            <p>🔬 Reverse Engineering for Educational Purposes | MediaTek Preloader Analysis</p>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem;">Updated: <span id="last-update"></span></p>
+        </div>
+    </div>
+    
+    <script>
+        const repoOwner = "YOUR_USERNAME";
+        const repoName = "YOUR_REPO";
+        const branch = "main";
+        
+        async function getRepoContents(path = "") {
+            const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${path}?ref=${branch}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return await response.json();
+            } catch (error) {
+                console.error("Error fetching API:", error);
+                return null;
+            }
+        }
+        
+        async function getRepoInfo() {
+            const url = `https://api.github.com/repos/${repoOwner}/${repoName}`;
+            try {
+                const response = await fetch(url);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                document.getElementById('repo-size').innerText = formatBytes(data.size);
+                document.getElementById('last-update').innerText = new Date(data.updated_at).toLocaleString();
+            } catch (error) {
+                console.error("Error fetching repo info:", error);
+            }
+        }
+        
+        function formatBytes(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function getFileIcon(filename) {
+            if (filename.endsWith('.py')) return '🐍';
+            if (filename.endsWith('.bin') || filename.endsWith('.img')) return '💾';
+            if (filename.endsWith('.txt')) return '📄';
+            if (filename.endsWith('.md')) return '📝';
+            if (filename.endsWith('.json')) return '📋';
+            if (filename.endsWith('.sh')) return '⚙️';
+            return '📁';
+        }
+        
+        function formatFileSize(bytes) {
+            if (!bytes || bytes === 0) return '';
+            return formatBytes(bytes);
+        }
+        
+        let allFiles = [];
+        
+        async function loadFiles() {
+            const fileListDiv = document.getElementById('file-list');
+            const contents = await getRepoContents();
+            
+            if (!contents) {
+                fileListDiv.innerHTML = '<div style="padding: 2rem; text-align: center; color: #f85149;">❌ Error loading files. Make sure repository is public.</div>';
+                return;
+            }
+            
+            allFiles = contents.filter(item => item.type === 'file');
+            document.getElementById('file-count').innerText = allFiles.length;
+            
+            renderFiles(allFiles);
+            getRepoInfo();
+        }
+        
+        function renderFiles(files) {
+            const fileListDiv = document.getElementById('file-list');
+            if (files.length === 0) {
+                fileListDiv.innerHTML = '<div style="padding: 2rem; text-align: center;">No files found</div>';
+                return;
+            }
+            
+            fileListDiv.innerHTML = files.map(file => `
+                <div class="file-item">
+                    <span class="file-icon">${getFileIcon(file.name)}</span>
+                    <a href="${file.download_url}" class="file-name" target="_blank">${file.name}</a>
+                    <span class="file-size">${formatFileSize(file.size)}</span>
+                    <button class="download-btn" onclick="downloadFile('${file.download_url}', '${file.name}')">Download</button>
+                </div>
+            `).join('');
+        }
+        
+        function downloadFile(url, filename) {
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = filename;
+                    link.click();
+                    URL.revokeObjectURL(link.href);
+                });
+        }
+        
+        document.getElementById('search').addEventListener('keyup', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filtered = allFiles.filter(file => file.name.toLowerCase().includes(searchTerm));
+            renderFiles(filtered);
         });
-    });
-</script>
+        
+        loadFiles();
+    </script>
 </body>
 </html>

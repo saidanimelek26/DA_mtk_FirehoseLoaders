@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FRP Analysis Files</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
+        h1 { color: #333; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
+        ul { list-style: none; padding: 0; }
+        li { padding: 8px; border-bottom: 1px solid #ddd; }
+        li:hover { background: #f0f0f0; }
+        a { text-decoration: none; color: #0366d6; }
+        a:hover { text-decoration: underline; }
+        .folder { color: #e36209; font-weight: bold; }
+        .file { color: #6f42c1; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📁 FRP Analysis Files</h1>
+    <p>Click any file to view or download</p>
+    <ul id="file-list">
+        <!-- سيتم تعبئتها تلقائياً -->
+    </ul>
+</div>
+<script>
+fetch('/اسم_المشروع/file-list.json')
+    .then(res => res.json())
+    .then(files => {
+        const ul = document.getElementById('file-list');
+        files.forEach(file => {
+            const li = document.createElement('li');
+            const icon = file.endsWith('/') ? '📁 ' : '📄 ';
+            li.innerHTML = `<a href="/اسم_المشروع/${file}">${icon}${file}</a>`;
+            ul.appendChild(li);
+        });
+    });
+</script>
+</body>
+</html>

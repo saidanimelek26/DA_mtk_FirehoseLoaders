@@ -45,7 +45,11 @@ If anyone is interested in reverse engineering the program and understanding its
 If you have any questions, suggestions, or would like to contribute to improving this project and supporting the MediaTek community, feel free to contact me.
 
 **Telegram:** @Meleksaidanidevmtk
+
 **Facebook:** https://www.facebook.com/no.idea.120/
+
 **AmtDump:** https://archive.diablosat.cc/firmwares/amt-dumps/
+
 **emiexit:** https://4pda.to/forum/index.php?showtopic=583114&st=9480#entry54676285
+
 Thank you for your support.

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dpInst>
+	<!-- chinese PRC -->
+	<language code="2052">
+		<dpinstTitle>展讯驱动安装包</dpinstTitle>
+	</language>
+	
+	<!-- english US -->
+	<language code="1033">
+		<dpinstTitle>Spreadtrum Driver Installation Package</dpinstTitle>
+	</language>
+	
+	<legacyMode/>
+	<deleteBinaries/>
+	<forceIfDriverIsNotBetter/>
+	<enableNotListedLanguages/>
+	
+	<group>
+		<package path=".\drivers\sprdmodem.inf" />
+		<package path=".\drivers\sprdmtp.inf" />
+		<package path=".\drivers\sprdadb.inf" />
+		<package path=".\drivers\sprdbus.inf" />
+		<package path=".\drivers\sprdmux.inf" />
+		<package path=".\drivers\sprdvcom.inf" />
+		<package path=".\drivers\sprdrndis.inf" />
+		<package path=".\drivers\sprdport.inf" />
+	</group>
+</dpInst>
+

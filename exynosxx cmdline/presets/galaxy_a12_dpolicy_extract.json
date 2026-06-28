@@ -1,0 +1,26 @@
+{
+  "_comment": "Captured live from MOBILedit Forensic Ultra v9.8.0.34378 on 2026-06-07 with x64dbg attached. Phone: Samsung Galaxy A12 (Exynos chip). Operation: 'dpolicy_extract' i.e. CPDN exploit on sBoot to patch DPolicy and boot Compelson's custom recovery ramdisk. Phone went to COMPELSON RECOVERY MODE - ROOTED - ADB after this call.",
+  "_source": "captured_call_dpolicy_extract.json",
+  "_capturedFrom": {
+    "process": "MOBILeditForensic.exe",
+    "function": "exynos.dll!bootCustomRamdisk",
+    "method_address": "0x00007FFC879AE350"
+  },
+  "deviceModel": "Samsung Galaxy A12",
+  "chipset": "exynos7884",
+
+  "firmwareParams": {
+    "variant":         "dpolicy_extract",
+    "base":            "0xDC800000",
+    "offset":          "0x00C00000",
+    "usbDownRamBase":  "0x92200000",
+    "cpdnUsbBufBase":  "0xDC800000"
+  },
+
+  "context": {
+    "_note": "We did not decode the context QJsonObject from the live call yet. An empty object MAY work, or it may crash inside bootCustomRamdisk if the function dereferences fields we haven't populated. The context QJsonObject in the live call had d-pointer=0x1F2292ABE30 and o-pointer=0x1F227DE52F0, both non-null, so it had real content. If the call fails, we'll need to dump and decode the context CBOR or hook in-process.",
+    "_likely_keys_seen_in_strings": ["timeoutMs", "verbose", "ramdiskPath", "exynosDllPath"]
+  },
+
+  "devicePathHint": "COM19"
+}

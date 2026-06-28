@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy S7, S7 Edge, Note FE (Exynos 8890)",
+  "chipset": "exynos8890",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0xB0000000",
+    "offset": "0x8000000"
+  },
+  "status": "inferred_from_9820"
+}

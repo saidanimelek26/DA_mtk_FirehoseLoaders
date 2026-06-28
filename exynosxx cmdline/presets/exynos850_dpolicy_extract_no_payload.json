@@ -1,0 +1,14 @@
+{
+  "deviceModel": "Galaxy A12 / A04s / A13 / M12 (Exynos 850)",
+  "chipset": "exynos850",
+  "exploitMethod": "CPDN",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_extract",
+    "base": "0xDC800000",
+    "offset": "0xC00000",
+    "usbDownRamBase": "0x92200000",
+    "cpdnUsbBufBase": "0xDC800000"
+  },
+  "context": {}
+}

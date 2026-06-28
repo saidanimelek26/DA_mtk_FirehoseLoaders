@@ -1,0 +1,14 @@
+{
+  "deviceModel": "Galaxy A10s, A20s, A30s, M12, A04s (Exynos 7884/7884B)",
+  "chipset": "exynos7884",
+  "exploitMethod": "CPDN",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_extract",
+    "base": "0xDC800000",
+    "offset": "0xC00000",
+    "usbDownRamBase": "0x92200000",
+    "cpdnUsbBufBase": "0xDC800000"
+  },
+  "status": "confirmed_working"
+}

@@ -1,0 +1,70 @@
+;***********************************************************************************************
+;
+; Name:  spmtp.inf
+;
+; Function:  Install SPRD Mobile MTP Device Driver on XP
+;
+; Copyright (c) Spreadtrum Communicaitons Inc. 
+;
+;***********************************************************************************************
+
+[Version]
+Signature	    = "$Windows NT$"
+Class		    = WPD
+ClassGUID	    = {EEC5AD98-8080-425f-922A-DABF3DE3F69A}
+Provider 	    = %Provider%
+DriverVer	    = 03/10/2014,2.9.310.1125
+CatalogFile.NTx86   = sprdmtp.cat
+CatalogFile.NTamd64 = sprdmtp.cat
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%SPRD%          = SPRD, NTx86, NTamd64
+
+[SPRD.NTx86]
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4001
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4001&MI_00
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4002&MI_00
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4011
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4012&MI_00
+
+[SPRD.NTamd64]
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4001
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4001&MI_00
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4002&MI_00
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4011
+%USB\SPRD_MOBILE&MTP.Desc%    = SPRD.Install, USB\VID_1782&PID_4012&MI_00
+
+
+[SPRD.Install]
+Include = wpdmtp.inf
+Needs   = WPD.MTP
+
+[SPRD.Install.hw]
+Include = wpdmtp.inf
+Needs   = WPD.MTP.Registration
+
+[SPRD.Install.Services]
+;Include = wpdmtp.inf
+;Needs   = WPD.MTP.Services
+AddService=WUDFRd, 0x000001fa, WUDFRD_ServiceInstall   ; 0x2 - assigned the name service as the PnP function driver
+AddService=WpdUsb, 0x000001f8, MTP.WpdUsb.AddService, MTPEventlog.AddService 
+
+
+[SPRD.Install.CoInstallers]
+Include = wpdmtp.inf
+Needs = WPD.MTP.CoInstallers
+
+[SPRD.Install.Wdf]
+Include = wpdmtp.inf
+Needs = WPD.MTP.Wdf
+UmdfServiceOrder=WpdMtpDriver
+
+; no sys copyfiles - the sys files are already in place
+
+[Strings]
+SPRD       ="Spreadtrum Communications Inc."
+Provider   ="Spreadtrum Communications Inc."
+USB\SPRD_MOBILE&MTP.Desc="SPRD Mobile MTP Device"

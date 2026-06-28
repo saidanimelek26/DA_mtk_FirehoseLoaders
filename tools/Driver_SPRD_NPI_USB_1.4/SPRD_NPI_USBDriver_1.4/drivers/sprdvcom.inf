@@ -1,0 +1,146 @@
+;/*++
+;
+;Copyright (c) DriverCoding Corporation.  All rights reserved.
+;
+;Abstract:
+;    INF file for the WDF USB serial driver 
+;
+;--*/
+
+[version]
+signature   = "$CHICAGO$"
+Class       = Ports
+ClassGuid   = {4D36E978-E325-11CE-BFC1-08002BE10318}
+Provider    = %PROV%
+CatalogFile = sprdvcom.cat
+DriverVer   = 03/04/2015,2.0.0.131
+
+; ================= Device Install section =====================
+
+[ControlFlags]
+ExcludeFromSelect=*
+
+[Manufacturer]
+%PROV%=PROV,NTx86,NTAMD64
+
+[SourceDisksNames]
+1 = %DISK_NAME%,,,\i386
+2 = %DISK_NAME%,,,\amd64
+
+[SourceDisksFiles.x86]
+WdfCoInstaller01009.dll = 1
+sprdvcom.sys=1
+
+[SourceDisksFiles.amd64]
+WdfCoInstaller01009.dll = 2
+sprdvcom.sys=2
+
+[DestinationDirs]
+DefaultDestDir  = 12
+
+; For Win2K
+[PROV]
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_4D00
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_3D00&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_3D10&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_5D03&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_5D04&MI_02
+;T1
+%USBCOMM_DL% = Serial_Inst, USB\VID_1782&PID_4D01&MI_00
+%USBCOMM%   = Serial_Inst, USB\VID_1782&PID_5D24&MI_02
+%COMDIAG%   = Serial_Inst, USB\VID_1782&PID_5D24&MI_03
+%WCN.AT%    = Serial_Inst, USB\VID_1782&PID_5D24&MI_04
+%WCN.DIAG%  = Serial_Inst, USB\VID_1782&PID_5D24&MI_05
+
+; For XP and later
+[PROV.NTx86]
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_4D00
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_3D00&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_3D10&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_5D03&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_5D04&MI_02
+;T1
+%USBCOMM_DL% = Serial_Inst, USB\VID_1782&PID_4D01&MI_00
+%USBCOMM%   = Serial_Inst, USB\VID_1782&PID_5D24&MI_02
+%COMDIAG%   = Serial_Inst, USB\VID_1782&PID_5D24&MI_03
+%WCN.AT%    = Serial_Inst, USB\VID_1782&PID_5D24&MI_04
+%WCN.DIAG%  = Serial_Inst, USB\VID_1782&PID_5D24&MI_05
+
+[PROV.NTAMD64]
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_4D00
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_3D00&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_3D10&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_5D03&MI_01
+%USBCOMM_DL%= Serial_Inst, USB\VID_1782&PID_5D04&MI_02
+;T1
+%USBCOMM_DL% = Serial_Inst, USB\VID_1782&PID_4D01&MI_00
+%USBCOMM%   = Serial_Inst, USB\VID_1782&PID_5D24&MI_02
+%COMDIAG%   = Serial_Inst, USB\VID_1782&PID_5D24&MI_03
+%WCN.AT%    = Serial_Inst, USB\VID_1782&PID_5D24&MI_04
+%WCN.DIAG%  = Serial_Inst, USB\VID_1782&PID_5D24&MI_05
+
+[Serial_Inst]
+CopyFiles   = Serial.CopyFiles
+AddReg      = Serial_Inst.AddReg
+
+[Serial_Inst.AddReg]
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[Serial_Inst.HW]
+AddReg = Models_HW_AddReg
+
+[Serial.CopyFiles]
+sprdvcom.sys
+
+[Serial_Inst.Services]
+AddService=sprdvcom,0x00000002,Serial_Service 
+
+[Serial_Service]
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\sprdvcom.sys
+AddReg         = Serial_Parameters_AddReg
+
+[Models_HW_AddReg]
+HKR,,"VendorRequestTimeoutValue", %REG_DWORD%, 5
+HKR,,DeviceCharacteristics,0x10001,0x0100         ; Use same security checks on relative opens
+HKR,,Security,,"D:P(A;;GA;;;BA)(A;;GA;;;WD)"
+HKR,,"SpreadtrumVendorRequest",%REG_DWORD%,1
+HKR,,"CdcControlLineState",%REG_DWORD%,0
+HKR,,"UseContinuousRead",%REG_DWORD%,0
+HKR,,"RxFifoSize",%REG_DWORD%,128
+HKR,,"UsbEnableZLP",%REG_DWORD%,1
+
+[Serial_Parameters_AddReg]
+
+;-------------- WDF Coinstaller installation
+[DestinationDirs]
+CoInstaller_CopyFiles = 11
+
+[Serial_Inst.CoInstallers]
+AddReg=CoInstaller_AddReg
+CopyFiles=CoInstaller_CopyFiles
+
+[CoInstaller_CopyFiles]
+WdfCoInstaller01009.dll
+
+[CoInstaller_AddReg]
+HKR,,CoInstallers32,0x00010000, "WdfCoInstaller01009.dll,WdfCoInstaller"
+
+[Serial_Inst.Wdf]
+KmdfService = sprdvcom, Serial_wdfsect
+
+[Serial_wdfsect]
+KmdfLibraryVersion = 1.9
+
+[Strings]
+PROV            = "DriverCoding Corporation"
+USBCOMM_DL      = "SPRD U2S Diag"
+USBCOMM         = "SPRD AT"
+COMDIAG         = "SPRD DIAG"
+WCN.AT          = "SPRD WCN AT"
+WCN.DIAG        = "SPRD WCN DIAG"
+DISK_NAME       = "SPRD USB to Serial Install Disk"
+REG_EXPAND_SZ   = 0x00020000 
+REG_DWORD       = 0x00010001 

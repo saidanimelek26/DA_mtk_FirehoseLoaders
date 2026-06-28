@@ -1,0 +1,18 @@
+{
+  "deviceModel": "Generic Exynos (fallback)",
+  "chipset": "generic",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x0",
+    "offset": "0x0",
+    "payloads": [
+      {
+        "type": "param",
+        "path": "EXN/2026-04-24-0442/185720"
+      }
+    ]
+  },
+  "context": {}
+}

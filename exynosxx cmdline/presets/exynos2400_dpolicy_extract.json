@@ -1,0 +1,14 @@
+{
+  "deviceModel": "Galaxy S24, S24+, S24 Ultra (Exynos 2400)",
+  "chipset": "exynos2400",
+  "exploitMethod": "CPDN",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_extract",
+    "base": "0x890010000",
+    "offset": "0xC00000",
+    "usbDownRamBase": "0xC5000000",
+    "cpdnUsbBufBase": "0x890010000"
+  },
+  "status": "captured_live"
+}

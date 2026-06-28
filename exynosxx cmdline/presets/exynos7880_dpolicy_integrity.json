@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy A5 2017, A7 2017 (Exynos 7880)",
+  "chipset": "exynos7880",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x70000000",
+    "offset": "0x8000000"
+  },
+  "status": "inferred_from_9610"
+}

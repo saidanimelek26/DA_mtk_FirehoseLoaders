@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy Note10, Note10+ (Exynos 9825)",
+  "chipset": "exynos9825",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0xB0000000",
+    "offset": "0x8000000"
+  },
+  "status": "captured_live"
+}

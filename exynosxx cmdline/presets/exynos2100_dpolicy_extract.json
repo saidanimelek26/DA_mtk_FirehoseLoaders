@@ -1,0 +1,14 @@
+{
+  "deviceModel": "Galaxy S21, S21+, S21 Ultra, Note20 (Exynos 2100)",
+  "chipset": "exynos2100",
+  "exploitMethod": "CPDN",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_extract",
+    "base": "0x880010000",
+    "offset": "0xC00000",
+    "usbDownRamBase": "0xC8000000",
+    "cpdnUsbBufBase": "0x890010000"
+  },
+  "status": "captured_live"
+}

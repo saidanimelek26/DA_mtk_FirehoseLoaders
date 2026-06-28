@@ -1,0 +1,14 @@
+{
+  "deviceModel": "Galaxy A8 2018, A6+ 2018, J8 (Exynos 7885)",
+  "chipset": "exynos7885",
+  "exploitMethod": "CPDN",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_extract",
+    "base": "0xDC800000",
+    "offset": "0xC00000",
+    "usbDownRamBase": "0x92200000",
+    "cpdnUsbBufBase": "0xDC800000"
+  },
+  "status": "inferred_from_7884"
+}

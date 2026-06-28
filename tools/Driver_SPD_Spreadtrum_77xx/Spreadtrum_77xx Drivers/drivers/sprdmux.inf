@@ -1,0 +1,117 @@
+;/*++
+;
+;Copyright (c) 2008-2011 DriverCoding Corporation All rights Reserved
+;
+;Module Name:
+;
+;    sprdmux.inf
+;
+;Abstract:
+;    INF file for installing MUX bus enumerator driver
+;
+;--*/
+[Version] 
+Signature = "$Windows NT$" 
+Class=USB
+ClassGUID={36fc9e60-c465-11cf-8056-444553540000} 
+Provider=%DC% 
+CatalogFile=sprdmux.cat
+DriverVer  = 03/10/2014,1.0.0.22
+
+[DestinationDirs] 
+Models.Files = 12
+CoInstaller.Files = 11
+
+[SourceDisksNames]
+1 = %Desc_x860%,,,\i386
+2 = %Desc_x860%,,,\amd64
+
+[SourceDisksFiles.x86]
+sprdmux.sys = 1
+muxprop.dll = 1
+[SourceDisksFiles.amd64]
+sprdmux.sys = 2
+muxprop.dll = 2
+[Manufacturer] 
+%DC%=DC, ntamd64
+
+[DC]
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d01
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d00&MI_00
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d02&MI_01
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d11
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d10&MI_00
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d12&MI_01
+
+[DC.ntamd64]
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d01
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d00&MI_00
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d02&MI_01
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d11
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d10&MI_00
+%ModelsDesc%=Models_Inst, USB\VID_1782&Pid_3d12&MI_01
+
+
+
+[Models_Inst] 
+CopyFiles = Models.Files, CoInstaller.Files
+AddReg = Models.AddReg
+
+[Models_Inst.HW]
+AddReg = Models_HW_AddReg
+
+[Models_Inst.Services] 
+AddService = sprdmux,0x00000002,Models_Service, 
+
+[Models_Service] 
+ServiceType = %SERVICE_KERNEL_DRIVER% 
+StartType = %SERVICE_DEMAND_START% 
+ErrorControl = %SERVICE_ERROR_NORMAL% 
+ServiceBinary = %12%\sprdmux.sys 
+AddReg = Service_AddReg
+
+[Models_HW_AddReg]
+HKR,,"ZeroPacket", %REG_DWORD%, 1
+HKR,,"MuxEnable", %REG_DWORD%, 1
+HKR,,"UsbTransferSize", %REG_DWORD%, 4096
+HKR,,"NumberOfVirtualDevice", %REG_DWORD%, 4
+HKR,,"IdleTimeout", %REG_DWORD%, 0
+HKR,,"MUX_PARAM_N2", %REG_DWORD%, 0
+HKR,,"MuxRxBufferSize", %REG_DWORD%, 16384
+
+[Service_AddReg]
+HKR,,TraceFile,%REG_DWORD%,0
+
+[Models.Files] 
+sprdmux.sys,,,0x06
+
+[CoInstaller.Files]
+muxprop.dll,,,0x06
+
+[Models.AddReg]
+HKR,,EnumPropPages32,,"muxprop.dll,DcMuxPropPageProvider"
+
+[Strings] 
+
+;  *******Localizable Strings******* 
+DC= "DriverCoding" 
+Desc_x860= "SPRD MUX Protocol Driver Disk"
+ModelsDesc= "SPRD MUX Protocol Driver"
+
+;  *******Non Localizable Strings******* 
+
+SERVICE_BOOT_START = 0x0 
+SERVICE_SYSTEM_START = 0x1 
+SERVICE_AUTO_START = 0x2 
+SERVICE_DEMAND_START = 0x3 
+SERVICE_DISABLED = 0x4 
+
+SERVICE_KERNEL_DRIVER = 0x1 
+SERVICE_ERROR_IGNORE = 0x0 
+SERVICE_ERROR_NORMAL = 0x1 
+SERVICE_ERROR_SEVERE = 0x2 
+SERVICE_ERROR_CRITICAL = 0x3 
+
+REG_EXPAND_SZ = 0x00020000 
+REG_DWORD = 0x00010001 
+

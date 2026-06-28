@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy A71 5G (Exynos 980)",
+  "chipset": "exynos980",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x880000000",
+    "offset": "0x8000000"
+  },
+  "status": "inferred_from_990"
+}

@@ -1,0 +1,18 @@
+{
+  "deviceModel": "Galaxy S10 / S10+ / Note10 / Note10+ (Exynos 9820/9825)",
+  "chipset": "exynos9820",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0xB0000000",
+    "offset": "0x8000000",
+    "payloads": [
+      {
+        "type": "param",
+        "path": "EXN/2026-04-24-0442/185724"
+      }
+    ]
+  },
+  "context": {}
+}

@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy S10, S10+, S10e (Exynos 9820)",
+  "chipset": "exynos9820",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0xB0000000",
+    "offset": "0x8000000"
+  },
+  "status": "captured_live"
+}

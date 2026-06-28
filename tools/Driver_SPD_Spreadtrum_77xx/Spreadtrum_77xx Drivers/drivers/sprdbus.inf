@@ -1,0 +1,66 @@
+;
+;   DCCOMBUS.INF (for Windows XP,Vista,Win7)
+;
+;   Copyright (c) 2011, DriverCoding Technology Inc.
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=USB
+ClassGUID={36FC9E60-C465-11CF-8056-444553540000}
+Provider=%COMPANY%
+DriverVer= 03/10/2014,1.0.1.0
+CatalogFile=sprdbus.cat
+
+[Manufacturer]
+%COMPANY%=Standard,ntamd64
+
+[Standard]
+%DCCOMBUS.DeviceDesc% = Composite.Dev, USB\VID_1782&PID_3D12
+%DCCOMBUS.DeviceDesc% = Composite.Dev, USB\VID_1782&PID_3D10
+%DCCOMBUS.DeviceDesc% = Composite.Dev, USB\VID_1782&PID_3D00
+
+[Standard.ntamd64]
+%DCCOMBUS.DeviceDesc% = Composite.Dev, USB\VID_1782&PID_3D12
+%DCCOMBUS.DeviceDesc% = Composite.Dev, USB\VID_1782&PID_3D10
+%DCCOMBUS.DeviceDesc% = Composite.Dev, USB\VID_1782&PID_3D00
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[DestinationDirs]
+DefaultDestDir=12
+
+[Composite.Dev.NT]
+CopyFiles=CommonClassParent.CopyFiles
+
+[CommonClassParent.CopyFiles]
+sprdbus.sys
+
+[SourceDisksNames]
+1 = %DISK_NAME%,,,\i386
+2 = %DISK_NAME%,,,\amd64
+
+[SourceDisksFiles.x86]
+sprdbus.sys = 1
+
+[SourceDisksFiles.amd64]
+sprdbus.sys = 2
+
+[Composite.Dev.NT.Services]
+Addservice = sprdbus, 0x00000002, CommonClassParent.AddService
+
+[CommonClassParent.AddService]
+DisplayName    = %USBCCGP.SvcDesc%
+ServiceType    = 1                  ; SERVICE_KERNEL_DRIVER
+StartType      = 3                  ; SERVICE_DEMAND_START
+ErrorControl   = 1                  ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %12%\sprdbus.sys
+LoadOrderGroup = Base
+
+[Strings]
+COMPANY = "DriverCoding"
+
+DCCOMBUS.DeviceDesc="DriverCoding USB Composite Bus"
+
+USBCCGP.SvcDesc="SPRD USB Composite Bus Driver"
+DISK_NAME = "SPRD USB Composite Bus Driver Diskette"

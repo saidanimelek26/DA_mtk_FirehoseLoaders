@@ -1,0 +1,14 @@
+{
+  "deviceModel": "Galaxy A34 5G, A54 5G (Exynos 1380)",
+  "chipset": "exynos1380",
+  "exploitMethod": "CPDN",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_extract",
+    "base": "0xE4000000",
+    "offset": "0xC00000",
+    "usbDownRamBase": "0xA3600000",
+    "cpdnUsbBufBase": "0xE4000000"
+  },
+  "status": "captured_live"
+}

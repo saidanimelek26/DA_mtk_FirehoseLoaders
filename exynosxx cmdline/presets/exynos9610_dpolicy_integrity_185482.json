@@ -1,0 +1,18 @@
+{
+  "deviceModel": "Galaxy A50 / A51 / M30s / M31 / M21 (Exynos 9610/9611)",
+  "chipset": "exynos9610",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x70000000",
+    "offset": "0x8000000",
+    "payloads": [
+      {
+        "type": "param",
+        "path": "EXN/2026-04-24-0442/185482"
+      }
+    ]
+  },
+  "context": {}
+}

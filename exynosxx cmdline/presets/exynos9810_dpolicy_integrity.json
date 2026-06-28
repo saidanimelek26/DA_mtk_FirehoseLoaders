@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy S9, S9+, Note9 (Exynos 9810)",
+  "chipset": "exynos9810",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0xB0000000",
+    "offset": "0x8000000"
+  },
+  "status": "inferred_from_9820"
+}

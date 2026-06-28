@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy S20, S20+, S20 Ultra, Note20 (Exynos 990)",
+  "chipset": "exynos990",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x880000000",
+    "offset": "0x8000000"
+  },
+  "status": "captured_live"
+}

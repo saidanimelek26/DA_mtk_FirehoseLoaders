@@ -1,0 +1,18 @@
+{
+  "deviceModel": "Galaxy A20 / A30 / M20 (Exynos 7904)",
+  "chipset": "exynos7904",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x80000000",
+    "offset": "0x8000000",
+    "payloads": [
+      {
+        "type": "param",
+        "path": "EXN/2026-04-24-0442/185478"
+      }
+    ]
+  },
+  "context": {}
+}

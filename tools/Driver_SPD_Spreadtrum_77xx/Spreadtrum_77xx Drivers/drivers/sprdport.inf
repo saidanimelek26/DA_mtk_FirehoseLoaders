@@ -1,0 +1,77 @@
+[Version]
+signature  = "$WINDOWS NT$"
+Class      = Ports
+Provider   = %PROVIDER%
+ClassGuid  = {4D36E978-E325-11CE-BFC1-08002BE10318}
+DriverVer  = 04/10/2014,1.0.0.21
+CatalogFile = sprdport.cat
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+[SourceDisksNames]
+1 = %SRCDISK%,,,\i386
+2 = %SRCDISK%,,,\amd64
+
+[SourceDisksFiles.x86]
+sprdport.sys = 1
+
+[SourceDisksFiles.amd64]
+sprdport.sys = 2
+
+[DestinationDirs]
+DefaultDestDir = 12
+DCPortInstall.NT.Copy=12
+
+[Manufacturer]
+%PROVIDER% = DCSerialPort,NTAMD64
+
+[DCSerialPort]
+%DC_CMCC_AT1% = DCPortInstall, DCMUX\DC_MUXPORT_02
+%DC_CMCC_AT2% = DCPortInstall, DCMUX\DC_MUXPORT_03
+
+[DCSerialPort.NTAMD64]
+%DC_CMCC_AT1% = DCPortInstall, DCMUX\DC_MUXPORT_02
+%DC_CMCC_AT2% = DCPortInstall, DCMUX\DC_MUXPORT_03
+
+
+[DCPortInstall.NT]
+CopyFiles = DCPortInstall.NT.Copy
+AddReg = All, AddReg.NT
+
+[DCPortInstall.NT.Copy]
+sprdport.sys,,,0x06
+
+[DCPortInstall.NT.Services]
+AddService = sprdport, 0x00000002, Service_Inst
+
+[Service_Inst]
+DisplayName   = %DISPLAY_NAME%
+ServiceType   = 1
+StartType     = 3
+ErrorControl  = 1
+ServiceBinary = %12%\sprdport.sys
+AddReg = Service_AddReg
+
+[Service_AddReg]
+HKR,,TraceFile,%REG_DWORD%,1
+
+[All]
+HKR,,NTMPDriver,,sprdport.sys
+
+[AddReg.NT]
+HKR,,PortSubClass,1,01
+HKR,,EnumPropPages32,,"MsPorts.dll,SerialPortPropPageProvider"
+
+[Strings]
+PROVIDER 			= "DriverCoding Corporation"
+SRCDISK 			= "SPRD Enum Child Devices Installation Disk"
+DC_CMCC_DIAG		= "SPRD CMCC Diag Interface"
+DC_CMCC_AT1 	= "SPRD CMCC AT Interface1"
+DC_CMCC_AT2 	= "SPRD CMCC AT Interface2"
+DC_CMCC_SOUND 		= "SPRD CMCC Sound Interface"
+DC_CMCC_VT 		= "SPRD CMCC VT Interface"
+DC_CMCC_CMMB	 	= "SPRD CMCC CMMB Interface"
+DISPLAY_NAME	 	= "SPRD Enum Child Ports"
+REG_EXPAND_SZ = 0x00020000
+REG_DWORD = 0x00010001

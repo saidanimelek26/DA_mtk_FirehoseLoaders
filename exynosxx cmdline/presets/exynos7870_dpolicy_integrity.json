@@ -1,0 +1,12 @@
+{
+  "deviceModel": "Galaxy J7 2017, A5 2017, J5 2017 (Exynos 7870)",
+  "chipset": "exynos7870",
+  "exploitMethod": "DWC3",
+  "devicePathHint": "",
+  "firmwareParams": {
+    "variant": "dpolicy_integrity",
+    "base": "0x70000000",
+    "offset": "0x8000000"
+  },
+  "status": "inferred_from_9610"
+}

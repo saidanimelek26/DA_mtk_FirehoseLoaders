@@ -1,0 +1,1 @@
+./spd_dump.exe --verbose 0 --wait 300 fdl "fdl1-sign.bin" 0x00005500 fdl "fdl2-sign.bin" 0x9EFFFE00 exec e persist reset
